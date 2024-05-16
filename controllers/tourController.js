@@ -2,6 +2,8 @@ const Tour = require('./../models/tourModel');
 const express = require('express');
 const { query } = require('express');
 const APIFeatures = require('../utils/apiFeatures');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync').catchAsync;
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = 5;
   req.query.sort = '-ratingsAverage,price';
@@ -33,33 +35,28 @@ exports.getAllTours = async (req, res) => {
 exports.getTour = async (req, res) => {
   try {
     const tour = await Tour.findById(req.params.id);
+    if (!tour) {
+      return next(new AppError('No tour found with that id ', 404));
+    }
     res.status(200).json({
       status: 'success',
       data: tour
     });
   } catch (err) {
-    console.log(err);
     return res.status(404).json({
       status: 'fail',
       message: 'invalid id'
     });
   }
 };
-exports.createTour = async (req, res) => {
-  try {
-    const newTour = await Tour.create(req.body);
-    res.status(201).json({
-      status: 'success',
-      tours: newTour
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'failed',
-      msg: 'Invalid Data Sent!!!',
-      err
-    });
-  }
-};
+
+exports.createTour = catchAsync(async (req, res) => {
+  const newTour = await Tour.create(req.body);
+  res.status(201).json({
+    status: 'success',
+    tours: newTour
+  });
+});
 exports.updateTour = async (req, res) => {
   try {
     const newTour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
