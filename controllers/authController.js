@@ -4,6 +4,24 @@ const AppError = require('../utils/appError');
 const { promisify } = require('util');
 const bcrypt = require('bcryptjs');
 const { catchAsync } = require('../utils/catchAsync');
+const sendEmail = require('../utils/email');
+const crypto = require('crypto');
+const express = require('express');
+
+const createSendToken = (user, statusCode, res) => {
+  const token = signToken(user._id);
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  res.cookie('jwt', token, cookieOptions);
+  user.password = undefined;
+  res.status(statusCode).json({ status: 'success', token, data: { user } });
+};
+
 const signToken = id => {
   return jwt.sign({ id }, process.env.JWT_S, {
     expiresIn: process.env.JWT_E
@@ -12,14 +30,7 @@ const signToken = id => {
 exports.signup = async (req, res) => {
   try {
     const newUser = await User.create(req.body);
-    const token = signToken(newUser._id);
-    res.status(200).send({
-      status: 'success',
-      token: token,
-      data: {
-        user: newUser
-      }
-    });
+    createSendToken(newUser, 200, res);
   } catch (err) {
     console.log(err);
     res.status(404).send({
@@ -38,12 +49,7 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!user || !correct) {
     return next(new AppError('incorrect email or password', 401));
   }
-  const token = signToken(user._id);
-  console.log(user);
-  res.status(200).send({
-    status: 'success',
-    token
-  });
+  createSendToken(user, 200, res);
 });
 exports.protect = catchAsync(async (req, res, next) => {
   let token;
@@ -69,4 +75,110 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
   req.user = currentUser;
   next();
+});
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('you do not have permission to perfrom this action', 403)
+      );
+    }
+    next();
+  };
+};
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError('There is no user with this email!!', 404));
+  }
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+  const resetURL = `${req.protocol}://${req.get(
+    'host'
+  )}/api/v1/users/resetPassword/${resetToken}`;
+  const message = ` Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}. \nIf you didn't forget your password, please ignore this email!`;
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: 'your password reset token valid for 10min',
+      message
+    });
+    res.status(200).json({
+      status: 'success',
+      msg: 'Token sent to email'
+    });
+  } catch (err) {
+    (user.passwordResetToken = undefined),
+      (user.passwordResetExpires = undefined),
+      await user.save({ validateBeforeSave: false });
+    return next(new AppError('there was a error sending email try again', 500));
+  }
+});
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() }
+  });
+  if (!user) {
+    return next(new AppError('the token has been expired', 500));
+  }
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  user.passwordResetExpires = undefined;
+  user.passwordResetToken = undefined;
+  await user.save();
+  createSendToken(user, 200, res);
+});
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select('+password');
+  if (!user) {
+    return next(new AppError('There is no user with this email!!', 404));
+  }
+  const givenPassword = await bcrypt.compare(
+    req.body.passwordCurrent,
+    user.password
+  );
+  if (!givenPassword) {
+    return next(new AppError('your current password is wrong', 401));
+  }
+  user.password = req.body.password;
+  user.confirmPassword = req.body.confirmPassword;
+  await user.save();
+  const token = signToken(user._id);
+  res.status(200).send({
+    status: 'success',
+    token
+  });
+});
+const filterObj = (obj, ...allowedFields) => {
+  Object.keys(obj).forEach(el => {
+    if (allowedFields.includes(el)) newObj = obj[el];
+  });
+  return newObj;
+};
+exports.updateMe = catchAsync(async (req, res, next) => {
+  if (req.body.password || req.body.confirmPassword) {
+    return next(new AppError('This route is not for password update', 400));
+  }
+  const filterBody = filterObj(req.body, 'name', 'email');
+  const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
+    new: true,
+    runValidators: true
+  });
+  res.status(200).json({
+    stats: 'success',
+    data: {
+      updateUser
+    }
+  });
+});
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  await User.findByIdAndDelete(req.user.id, { active: false });
+  res.status(204).send({
+    status: 'succes'
+  });
 });
