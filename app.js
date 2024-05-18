@@ -6,8 +6,33 @@ const userRouter = require('./routes/userRoutes');
 const AppError = require('./utils/appError');
 const globalError = require('./controllers/errorController');
 const cookieParser = require('cookie-parser');
-
+const rateLimit = require('express-rate-limit');
+const helment = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const hpp = require('hpp');
 const app = express();
+const limiter = rateLimit({
+  max: 100,
+  windowMs: 60 * 60 * 100,
+  message: 'too many requests from this ip ,please try again in an hour'
+});
+app.use(mongoSanitize());
+app.use(xss());
+app.use(
+  hpp({
+    whitelist: [
+      'duration',
+      'ratingsQuantity',
+      'ratingsAverage',
+      'maxGroupSize',
+      'difficulty',
+      'price'
+    ]
+  })
+);
+app.use(helment());
+app.use('/api', limiter);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
