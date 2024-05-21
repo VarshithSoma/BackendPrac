@@ -139,14 +139,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     return next(new AppError('There is no user with this email!!', 404));
   }
   const givenPassword = await bcrypt.compare(
-    req.body.passwordCurrent,
+    req.body.currentPassword,
     user.password
   );
   if (!givenPassword) {
     return next(new AppError('your current password is wrong', 401));
   }
   user.password = req.body.password;
-  user.confirmPassword = req.body.confirmPassword;
+  user.passwordConfirm = req.body.confirmPassword;
   await user.save();
   const token = signToken(user._id);
   res.status(200).send({

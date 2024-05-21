@@ -5,6 +5,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const AppError = require('./utils/appError');
 const globalError = require('./controllers/errorController');
+const reviewRouter = require('./routes/reviewRoutes');
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 const helment = require('helmet');
@@ -42,6 +43,7 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
+app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.all('*', (req, res, next) => {
