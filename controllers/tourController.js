@@ -4,6 +4,7 @@ const { query } = require('express');
 const APIFeatures = require('../utils/apiFeatures');
 const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync').catchAsync;
+const factory = require('./handlerFactory');
 exports.aliasTopTours = (req, res, next) => {
   req.query.limit = 5;
   req.query.sort = '-ratingsAverage,price';
@@ -74,21 +75,22 @@ exports.updateTour = async (req, res) => {
     });
   }
 };
-exports.deleteTour = async (req, res) => {
-  try {
-    await Tour.findByIdAndDelete(req.params.id);
-    res.status(204).json({
-      status: 'success',
-      msg: 'success'
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({
-      status: 'Failed',
-      data: null
-    });
-  }
-};
+exports.deleteTour = factory.deleteOne(Tour);
+// exports.deleteTour = async (req, res) => {
+//   try {
+//     await Tour.findByIdAndDelete(req.params.id);
+//     res.status(204).json({
+//       status: 'success',
+//       msg: 'success'
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(404).json({
+//       status: 'Failed',
+//       data: null
+//     });
+//   }
+// };
 exports.getTourStats = async (req, res) => {
   try {
     const stats = await Tour.aggregate([
