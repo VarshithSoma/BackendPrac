@@ -154,31 +154,3 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     token
   });
 });
-const filterObj = (obj, ...allowedFields) => {
-  Object.keys(obj).forEach(el => {
-    if (allowedFields.includes(el)) newObj = obj[el];
-  });
-  return newObj;
-};
-exports.updateMe = catchAsync(async (req, res, next) => {
-  if (req.body.password || req.body.confirmPassword) {
-    return next(new AppError('This route is not for password update', 400));
-  }
-  const filterBody = filterObj(req.body, 'name', 'email');
-  const updateUser = await User.findByIdAndUpdate(req.user.id, filterBody, {
-    new: true,
-    runValidators: true
-  });
-  res.status(200).json({
-    stats: 'success',
-    data: {
-      updateUser
-    }
-  });
-});
-exports.deleteMe = catchAsync(async (req, res, next) => {
-  await User.findByIdAndDelete(req.user.id, { active: false });
-  res.status(204).send({
-    status: 'succes'
-  });
-});
