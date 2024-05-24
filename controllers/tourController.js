@@ -100,3 +100,19 @@ exports.getMonthlyPlan = async (req, res) => {
     res.status(404).send({ status: 'failed', msg: err });
   }
 };
+exports.getToursWithin = (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const [lat, lng] = latlng.split(',');
+  if (!lng || !lat) {
+    next(
+      new AppError(
+        'please provide latitude longitude in correct format [lat,lng]',
+        400
+      )
+    );
+  }
+  console.log(distance, lat, lng, unit);
+  res.status(200).json({
+    status: 'success'
+  });
+};

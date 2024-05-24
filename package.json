@@ -23,6 +23,7 @@
     "morgan": "^1.10.0",
     "node": "^21.7.1",
     "nodemailer": "^6.9.13",
+    "pug": "^3.0.2",
     "slugify": "^1.6.6",
     "validator": "^13.12.0",
     "xss-clean": "^0.1.4"

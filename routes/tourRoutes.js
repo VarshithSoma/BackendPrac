@@ -17,11 +17,14 @@ Router.route('/monthly-plan/:id').get(
   authController.restrictTo('admin', 'lead-guide', 'guide'),
   tourController.getMonthlyPlan
 );
+Router.route('/tours-within/:distance/center/:latlng/unit/:unit').get(
+  tourController.getToursWithin
+);
 Router.route('/')
   .get(tourController.getAllTours)
   .post(
     authController.protect,
-    authController.restrictTo('admin,lead-guide'),
+    authController.restrictTo('admin', 'lead-guide'),
     tourController.createTour
   );
 
