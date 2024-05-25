@@ -1,18 +1,22 @@
 DOCTYPE html
-    html(lang='en')
-        head
+    head 
+        block head 
             meta(charset='UTF-8')
             meta(name='viewport' content='width=device-width, initial-scale=1.0')
-            link(href='https://fonts.googleapis.com/css?family=Lato:300,300i,700' rel='stylesheet')
-            link(rel='stylesheet' href='css/style.css')
-            link(rel='shortcut icon' type='image/png' href='img/favicon.png') 
+            link(rel='stylesheet' href='/css/style.css')
+            link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+            link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
+            script(src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js')
+            link(href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet')
             title Natours | #{title}
-
-        body
-            // HEADER
-            include _header
-            // CONTENT
-            block content 
-                h1 this is a placeholder heading 
-            // FOOTER
-            include _footer
+    body
+        // HEADER
+        include _header
+        // CONTENT
+        block content 
+            h1 this is a placeholder heading 
+        // FOOTER
+        include _footer
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
+        script(src='/js/mapbox.js')
+        script(src='/js/login.js') 

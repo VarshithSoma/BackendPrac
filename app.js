@@ -15,8 +15,38 @@ const viewRouter = require('./routes/viewRoutes');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const app = express();
+const helmet = require('helmet');
+const cors = require('cors');
+app.use(cookieParser());
+app.use(cors());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        'script-src': [
+          "'self'", // allow scripts from your own domain
+          "'unsafe-inline'", // allow inline scripts (you may want to remove this depending on your needs)
+          'https://api.mapbox.com' // allow scripts from the Mapbox CDN
+        ],
+        'worker-src': [
+          "'self'", // allow web workers from your own domain
+          'http://localhost:3000', // allow web workers from the current host (development environment)
+          'https://api.mapbox.com', // allow web workers from the Mapbox CDN
+          'blob:' // allow web workers from blob URLs
+        ],
+        'connect-src': [
+          "'self'", // allow connections to your own domain
+          'https://api.mapbox.com', // allow connections to the Mapbox API
+          'https://events.mapbox.com' // allow connections to Mapbox events
+        ]
+      }
+    }
+  })
+);
+
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 100,
@@ -41,10 +71,9 @@ app.use('/api', limiter);
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
+  console.log(req.cookies);
   next();
 });
 app.use('/', viewRouter);
