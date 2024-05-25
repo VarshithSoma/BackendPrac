@@ -111,6 +111,15 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
   // Proceed to the next middleware
   return next();
 });
+exports.logOut = catchAsync(async (req, res, next) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: Date.now() + 10 * 1000,
+    httpOnly: true
+  });
+  res.status(200).send({
+    status: 'success'
+  });
+});
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
