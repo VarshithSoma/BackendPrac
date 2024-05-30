@@ -13,7 +13,7 @@ Router.post('/login', authController.login);
 Router.post('/forgotPassword', authController.forgotPassword);
 Router.patch('/resetPassword/:token', authController.resetPassword);
 Router.use(authController.protect);
-
+Router.get('/logout', authController.logOut);
 Router.patch('/updateMyPassword', authController.updatePassword);
 Router.delete('/deleteMe', userController.deleteMe);
 Router.route('/updateMe', userController.updateMe);

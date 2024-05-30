@@ -78,42 +78,30 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
-exports.isLoggedIn = catchAsync(async (req, res, next) => {
-  // Check if there is a JWT cookie
-  if (!req.cookies.jwt) {
-    return next();
-  }
-
-  try {
-    // Verify the token
-    const decoded = await promisify(jwt.verify)(
-      req.cookies.jwt,
-      process.env.JWT_S
-    );
-
-    // Check if the user still exists
-    const currentUser = await User.findById(decoded.id);
-    if (!currentUser) {
+exports.isLoggedIn = async (req, res, next) => {
+  if (req.cookies.jwt) {
+    try {
+      const decoded = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_S
+      );
+      const currentUser = await User.findById(decoded.id);
+      if (!currentUser) {
+        return next();
+      }
+      if (currentUser.changedPasswordAfter(decoded.iat)) {
+        return next();
+      }
+      res.locals.user = currentUser;
+    } catch (error) {
       return next();
     }
-
-    // Check if the user changed password after the token was issued
-    if (currentUser.changedPasswordAfter(decoded.iat)) {
-      return next();
-    }
-
-    // There is a logged in user
-    res.locals.user = currentUser;
-  } catch (error) {
-    return next();
   }
-
-  // Proceed to the next middleware
   return next();
-});
+};
 exports.logOut = catchAsync(async (req, res, next) => {
   res.cookie('jwt', 'loggedout', {
-    expires: Date.now() + 10 * 1000,
+    expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true
   });
   res.status(200).send({

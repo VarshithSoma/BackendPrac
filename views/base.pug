@@ -5,9 +5,14 @@ DOCTYPE html
             meta(name='viewport' content='width=device-width, initial-scale=1.0')
             link(rel='stylesheet' href='/css/style.css')
             link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+            <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com;">
+
             link(rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:300,300i,700')
             script(src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js')
             link(href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet')
+            script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
+            <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdnjs.cloudflare.com;">
+
             title Natours | #{title}
     body
         // HEADER
@@ -17,7 +22,6 @@ DOCTYPE html
             h1 this is a placeholder heading 
         // FOOTER
         include _footer
-        //- script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
-        //- script(src='/js/mapbox.js')
-        //- script(src='/js/login.js') 
-        script(src='/js/bundle.js') 
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
+        script(src='/js/mapbox.js')
+        script(src='/js/login.js') 
