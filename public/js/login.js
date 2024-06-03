@@ -20,8 +20,6 @@ const login = async (email, password) => {
     showAlert('error', 'something went wrong try again');
   }
 };
-import 'regenerator-runtime/runtime';
-import axios from 'axios';
 const logout = async () => {
   try {
     const res = await axios({
@@ -37,7 +35,7 @@ const logout = async () => {
     showAlert('error', 'something went wrong try again');
   }
 };
-const form = document.querySelector('.form');
+const form = document.querySelector('.form--login');
 if (form) {
   form.addEventListener('submit', e => {
     e.preventDefault();

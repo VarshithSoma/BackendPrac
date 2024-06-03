@@ -2,21 +2,22 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const Router = express.Router();
-Router.get(
-  '/me',
-  authController.protect,
-  userController.getMe,
-  userController.getUser
-);
 Router.post('/signup', authController.signup);
 Router.post('/login', authController.login);
+Router.get('/logout', authController.logOut);
+
 Router.post('/forgotPassword', authController.forgotPassword);
 Router.patch('/resetPassword/:token', authController.resetPassword);
+
 Router.use(authController.protect);
-Router.get('/logout', authController.logOut);
 Router.patch('/updateMyPassword', authController.updatePassword);
 Router.delete('/deleteMe', userController.deleteMe);
-Router.route('/updateMe', userController.updateMe);
+Router.patch(
+  '/updateMe',
+  userController.uploadUserPhoto,
+  userController.updateMe
+);
+Router.get('/me', userController.getMe, userController.getUser);
 Router.use(authController.restrictTo('admin'));
 Router.route('/')
   .get(userController.getAllUsers)
