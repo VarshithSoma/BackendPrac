@@ -31,7 +31,7 @@ const multerFilter = (req, file, cb) => {
 };
 const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
 exports.uploadUserPhoto = upload.single('photo');
-exports.resizeUserPhoto = async (req, res, next) => {
+exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
   if (!req.file) return next();
   req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
   await sharp(req.file.buffer)
@@ -39,7 +39,7 @@ exports.resizeUserPhoto = async (req, res, next) => {
     .toFormat('jpeg')
     .toFile(`public/img/users/${req.file.filename}`);
   next();
-};
+});
 exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
 exports.updateUser = factory.updateOne(User);
