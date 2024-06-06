@@ -71,3 +71,11 @@ exports.updateUserData = catchAsync(async (req, res, next) => {
       user: updatedUser
     });
 });
+exports.getSignupForm = catchAsync(async (req, res, next) => {
+  res
+    .status(200)
+    .set('Content-Security-Policy', "connect-src 'self' http://127.0.0.1:8000/")
+    .render('signup', {
+      title: 'Log into your account'
+    });
+});

@@ -1,14 +1,21 @@
 :root {
-  --section-rotate: 9vw;
+  --section-rotate: 0vw;
+  --star: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 17.25l-6.188 3.75 1.641-7.031-5.438-4.734 7.172-0.609 2.813-6.609 2.813 6.609 7.172 0.609-5.438 4.734 1.641 7.031z"/></svg>');
+  --fill: gold;
+  --fillbg: rgba(100, 100, 100, 0.15);
+  --dir: right;
+  --stars: 5;
+  --starsize: 3rem;
+  --symbol: var(--star);
+  --value: 1;
+  --x: calc(100% * (var(--value) / var(--stars)));
 }
 
 ::-moz-selection {
-  background-color: #55c57a;
   color: #fff;
 }
 
 ::selection {
-  background-color: #55c57a;
   color: #fff;
 }
 
@@ -114,14 +121,6 @@ body {
   font-size: 2.25rem;
   text-transform: uppercase;
   font-weight: 700;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#7dd56f),
-    to(#28b487)
-  );
-  background-image: linear-gradient(to right, #7dd56f, #28b487);
   -webkit-background-clip: text;
   color: transparent;
   letter-spacing: 0.1rem;
@@ -148,22 +147,12 @@ body {
 }
 .heading-primary span,
 .heading-tertirary span {
+  color: #7d7878;
   padding: 1rem 1.5rem;
-  line-height: 1;
+  line-height: 1.5;
+  font-weight: 900;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(rgba(125, 213, 111, 0.85)),
-    to(rgba(40, 180, 135, 0.85))
-  );
-  background-image: linear-gradient(
-    to bottom right,
-    rgba(125, 213, 111, 0.85),
-    rgba(40, 180, 135, 0.85)
-  );
 }
 
 .heading-primary {
@@ -337,18 +326,6 @@ body {
 .section-header {
   position: relative;
   height: 38vw;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - var(--section-rotate)),
-    0 100%
-  );
-  -webkit-clip-path: polygon(
-    0 0,
-    100% 0,
-    100% calc(100% - var(--section-rotate)),
-    0 100%
-  );
 }
 
 .header__hero {
@@ -368,14 +345,6 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#7dd56f),
-    to(#28b487)
-  );
-  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   opacity: 0.85;
 }
 
@@ -428,7 +397,6 @@ body {
 
 .section-description {
   background-color: #fcfcfc;
-  margin-top: calc(0px - var(--section-rotate));
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -436,7 +404,6 @@ body {
 .section-description > * {
   padding: 0 8vw;
   padding-top: 14vw;
-  padding-bottom: calc(1vw + var(--section-rotate));
   -webkit-box-flex: 0;
   -ms-flex: 0 0 50%;
   flex: 0 0 50%;
@@ -504,19 +471,6 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  clip-path: polygon(
-    0 var(--section-rotate),
-    100% 0,
-    100% calc(100% - var(--section-rotate)),
-    0 100%
-  );
-  -webkit-clip-path: polygon(
-    0 var(--section-rotate),
-    100% 0,
-    100% calc(100% - var(--section-rotate)),
-    0 100%
-  );
-  margin-top: calc(0px - var(--section-rotate));
   position: relative;
   z-index: 1000;
 }
@@ -541,7 +495,6 @@ body {
 .section-map {
   position: relative;
   height: 65rem;
-  margin-top: calc(0px - var(--section-rotate));
 }
 
 #map {
@@ -577,26 +530,6 @@ body {
   padding: calc(5rem + var(--section-rotate)) 0;
   position: relative;
   z-index: 1000;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#7dd56f),
-    to(#28b487)
-  );
-  background: linear-gradient(to right bottom, #7dd56f, #28b487);
-  clip-path: polygon(
-    0 var(--section-rotate),
-    100% 0,
-    100% calc(100% - var(--section-rotate)),
-    0 100%
-  );
-  -webkit-clip-path: polygon(
-    0 var(--section-rotate),
-    100% 0,
-    100% calc(100% - var(--section-rotate)),
-    0 100%
-  );
 }
 
 .reviews {
@@ -613,8 +546,6 @@ body {
   padding: 4rem;
   background-color: #f7f7f7;
   border-radius: 3px;
-  -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
-  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
   scroll-snap-align: center;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -676,23 +607,17 @@ body {
 }
 
 .section-cta {
-  margin-top: calc(0px - var(--section-rotate));
   padding: 3rem;
   padding-bottom: 11rem;
-  padding-top: calc(15rem + var(--section-rotate));
   background-color: #f7f7f7;
 }
 
 .cta {
   position: relative;
-  max-width: 105rem;
   margin: 0 auto;
   overflow: hidden;
-  background-color: #fff;
   padding: 9rem 5rem 9rem 21rem;
   border-radius: 2rem;
-  -webkit-box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
-  box-shadow: 0 3rem 8rem 0.5rem rgba(0, 0, 0, 0.15);
 }
 .cta__img {
   height: 15rem;
@@ -715,14 +640,6 @@ body {
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
-  background: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#7dd56f),
-    to(#28b487)
-  );
-  background: linear-gradient(to right bottom, #7dd56f, #28b487);
   z-index: 10;
   -webkit-transform: translate(-35%, -50%);
   transform: translate(-35%, -50%);
@@ -732,7 +649,6 @@ body {
 }
 .cta__img--1 {
   -webkit-transform: translate(-10%, -50%) scale(0.97);
-  transform: translate(-10%, -50%) scale(0.97);
   z-index: 9;
 }
 .cta__img--2 {
@@ -779,7 +695,6 @@ body {
     from(#7dd56f),
     to(#28b487)
   );
-  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
   padding: 4rem 0;
 }
 .user-view__content {
@@ -1100,23 +1015,12 @@ body {
 }
 .card__picture {
   position: relative;
-  -webkit-clip-path: polygon(0 0, 100% 0%, 100% 83%, 0% 98%);
-  clip-path: polygon(0 0, 100% 0%, 100% 83%, 0% 98%);
   height: 22rem;
 }
 .card__picture-overlay {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    right bottom,
-    from(#7dd56f),
-    to(#28b487)
-  );
-  background-image: linear-gradient(to right bottom, #7dd56f, #28b487);
-  opacity: 0.7;
 }
 .card__picture-img {
   -o-object-fit: cover;
@@ -1248,8 +1152,6 @@ body {
   border-radius: 4px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  /* Pseudo element (a visible thing that isn't really in the DOM).
-      Also needs -ms- */
 }
 .form__input:focus {
   outline: none;
@@ -1321,4 +1223,220 @@ body {
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
   -webkit-transform: translateY(-2px);
   transform: translateY(-2px);
+}
+.card-container {
+  display: flex;
+  flex-direction: column;
+}
+.card {
+  display: flex;
+  flex-direction: row;
+  border-radius: 30px;
+}
+.heading-tertirary {
+  width: 100%;
+}
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  background-color: white;
+  height: 100%;
+  width: 30%;
+  margin-top: 0;
+}
+.card__picture-overlay {
+  width: 40%;
+}
+.card__details {
+  width: 50%;
+}
+#map {
+  border-radius: 20px;
+}
+.var {
+  display: grid;
+  grid-template: repeat(1, 1fr) / repeat(2, 1fr);
+  grid-template-areas: 'one two';
+}
+.section-header {
+  border-radius: 20px;
+  margin: 20px;
+  grid-area: one;
+}
+.header__hero-img {
+  border-radius: 20px;
+}
+.header__hero-overlay {
+  display: none;
+}
+.section-map {
+  height: 500px;
+  margin: 20px;
+  grid-area: two;
+}
+.heading-primary {
+  width: 100%;
+}
+.heading-box {
+  display: flex;
+  flex-direction: column;
+}
+.heading-box__group {
+  color: #444;
+}
+.section-description {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  height: 400px;
+}
+.overview-box {
+  border-radius: 20px;
+  margin: 20px;
+}
+.description-box {
+  border-radius: 20px;
+  margin: 20px;
+}
+.picture-box {
+  margin: 10px;
+}
+.picture-box__img {
+  border-radius: 10px;
+}
+.overview-box {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.description-box {
+  display: none;
+}
+.cta {
+  display: flex;
+}
+.reviews {
+  display: flex;
+  flex-direction: column;
+}
+.reviews__card {
+  width: 70%;
+  margin: 10px;
+  border-radius: 20px;
+}
+.heading-secondary {
+  color: #777;
+}
+.section-reviews-user {
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  background-color: #cccccc;
+  border-radius: 10px;
+  padding: 30px;
+}
+.css-input {
+  display: block;
+  padding: 14px;
+  font-size: 16px;
+  border-width: 1px;
+  border-color: #cccccc;
+  background-color: #ffffff;
+  color: #000000;
+  border-style: solid;
+  border-radius: 10px;
+  box-shadow: 0px 0px 5px rgba(66, 66, 66, 0.75);
+}
+.css-input:focus {
+  outline: none;
+}
+
+.rating {
+  display: inline-block;
+  position: relative;
+  height: 30px;
+  line-height: 30px;
+  font-size: 30px;
+}
+
+.rating label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  cursor: pointer;
+}
+
+.rating label:last-child {
+  position: static;
+}
+
+.rating label:nth-child(1) {
+  z-index: 5;
+}
+
+.rating label:nth-child(2) {
+  z-index: 4;
+}
+
+.rating label:nth-child(3) {
+  z-index: 3;
+}
+
+.rating label:nth-child(4) {
+  z-index: 2;
+}
+
+.rating label:nth-child(5) {
+  z-index: 1;
+}
+
+.rating label input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.rating label .icon {
+  float: left;
+  color: transparent;
+}
+
+.rating label:last-child .icon {
+  color: #000;
+}
+
+.rating:not(:hover) label input:checked ~ .icon,
+.rating:hover label:hover input ~ .icon {
+  color: #55c57a;
+}
+
+.rating label input:focus:not(:checked) ~ .icon:last-child {
+  color: white;
+  text-shadow: 0 0 5px #55c57a;
+}
+.rating {
+  margin-top: 20px;
+}
+.revad {
+  display: flex;
+  flex-direction: row;
+}
+.section-reviews-user {
+  width: 30%;
+  height: 300px;
+  margin: 50px;
+}
+.reviews__card {
+  width: 90%;
+}
+.review-input {
+  width: 300px;
+}
+.revsub {
+  margin-top: 20px;
 }

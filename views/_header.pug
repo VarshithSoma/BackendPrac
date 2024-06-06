@@ -1,5 +1,6 @@
 header.header
     script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
+    script(src='https://js.stripe.com/v3/')
     nav.nav.nav--tours 
         a.nav__el(href='/') All tours
     .header__logo
@@ -12,4 +13,4 @@ header.header
             span=user.name.split(' ')[0] 
     else
         a.nav__el(href='/login') Login
-        a.nav__el.nav__el--cta(href='#') Signup
+        a.nav__el.nav__el--cta(href='/signup') Signup

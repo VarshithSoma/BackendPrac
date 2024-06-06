@@ -1,4 +1,4 @@
-DOCTYPE html
+DOCTYPE 
     head 
         block head 
             meta(charset='UTF-8')
@@ -11,7 +11,7 @@ DOCTYPE html
             link(href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet')
             script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
             script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
-            
+            script(src='https://js.stripe.com/v3/')
             title Natours | #{title}
     body
         // HEADER
@@ -22,6 +22,8 @@ DOCTYPE html
         // FOOTER
         include _footer
         script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
+        script(src='https://js.stripe.com/v3/')
         script(src='/js/mapbox.js')
         script(src='/js/login.js') 
         script(src='https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.2/axios.min.js') 
+        script(src="/js/stripe.js") 

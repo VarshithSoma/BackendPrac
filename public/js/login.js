@@ -59,3 +59,92 @@ const showAlert = (type, msg) => {
   document.querySelector('body').insertAdjacentHTML('afterbegin', markup);
   window.setTimeout(hideAlert, 5000);
 };
+const signupForm = document.querySelector('.form--signup');
+if (signupForm) {
+  // Getting name, email and password from "/signup" form
+  signupForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('password-confirm').value;
+
+    signup(name, email, password, passwordConfirm);
+  });
+}
+const signup = async (name, email, password, passwordConfirm) => {
+  try {
+    const response = await axios({
+      method: 'POST',
+      url: '/api/v1/users/signup',
+      data: {
+        name,
+        email,
+        password,
+        passwordConfirm
+      }
+    });
+
+    if (response.data.status === 'success') {
+      showAlert('success', 'Account created successfully!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
+  } catch (error) {
+    showAlert('error', error.response.data.message);
+  }
+};
+
+const userDataForm = document.querySelector('.form-user-data');
+if (userDataForm) {
+  userDataForm.addEventListener('submit', e => {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+
+    updateSettings(form, 'data');
+  });
+}
+const updateSettings = async (data, type) => {
+  try {
+    const response = await axios({
+      method: 'PATCH',
+      url: '/api/v1/users/updateMe',
+      data
+    });
+
+    if (response.data.status === 'success') {
+      showAlert('success', `${type.toUpperCase()} updated successfully!`);
+    }
+    location.reload();
+  } catch (error) {
+    showAlert('error', error.response.data.message);
+  }
+};
+const submitReview = document.getElementsByClassName('submit-review');
+if (submitReview) {
+  submitReview.addEventListener('submit', function() {
+    const reviewText = document.getElementById('reviewText').value;
+    const rating = document.querySelector('input[name="stars"]:checked').value;
+    const reviewData = {
+      review: reviewText,
+      rating: parseInt(rating)
+    };
+    const id = document.getElementsByClassName('review-input').dataset.id;
+    const url = `/api/v1/tours/${id}/review`;
+    console.log(url, reviewData);
+    axios
+      .post(url, reviewData)
+      .then(response => {
+        console.log('Success:', response.data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  });
+}

@@ -12,6 +12,8 @@ const rateLimit = require('express-rate-limit');
 const helment = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const viewRouter = require('./routes/viewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
+const compression = require('compression');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const app = express();
@@ -26,18 +28,21 @@ app.use(
         'script-src': [
           "'self'", // allow scripts from your own domain
           "'unsafe-inline'", // allow inline scripts (you may want to remove this depending on your needs)
-          'https://api.mapbox.com' // allow scripts from the Mapbox CDN
+          'https://api.mapbox.com', // allow scripts from the Mapbox CDN
+          'https://js.stripe.com'
         ],
         'worker-src': [
           "'self'", // allow web workers from your own domain
           'http://localhost:3000', // allow web workers from the current host (development environment)
           'https://api.mapbox.com', // allow web workers from the Mapbox CDN
+          'https://js.stripe.com',
           'blob:' // allow web workers from blob URLs
         ],
         'connect-src': [
           "'self'", // allow connections to your own domain
           'https://api.mapbox.com', // allow connections to the Mapbox API
-          'https://events.mapbox.com' // allow connections to Mapbox events
+          'https://events.mapbox.com', // allow connections to Mapbox events
+          'https://js.stripe.com'
         ]
       }
     }
@@ -66,6 +71,7 @@ app.use(
     ]
   })
 );
+app.use(compression());
 app.use(helment());
 app.use('/api', limiter);
 app.use(morgan('dev'));
@@ -79,6 +85,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/bookings', bookingRouter);
 app.all('*', (req, res, next) => {
   next(new AppError(`cant find ${req.originalUrl} on this server`, 404));
 });
