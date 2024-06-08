@@ -41,13 +41,6 @@ block content
                 +overviewBox('Difficulty',tour.difficulty,'trending-up')
                 +overviewBox('Participants',tour.maxGroupSize,'user')
                 +overviewBox('Rating',`${tour.ratingsAverage} / 5`,'star')
-            .overview-box__group
-                h2.heading-secondary.ma-bt-lg Your tour guides
-                each guide in tour.guides
-                    .overview-box__detail
-                        img.overview-box__img(src=`/img/users/${guide.photo}`, alt='Lead guide')
-                        span.overview-box__label=guide.role
-                        span.overview-box__text=guide.name
         .description-box
             h2.heading-secondary.ma-bt-lg=`About ${tour.name} tour`
             - const paragraphs=tour.description.split(`\n`);
@@ -66,42 +59,16 @@ block content
                 class=`picture-box__img--${i+1}`
     section.section-reviews
         .revad
+            if user 
+                section.section-reviews-user
+                  form.add-review
+                    h2.heading-secondary.ma-bt-lg Add Review
+                    input#reviewText(type="text" class="review-input css-input" placeholder="Fantastic Refreshing" data-id=tour.id data-user-id=user._id)
+                    input(type='number' class="css-input rating-num" name='rating' placeholder="Give rating")
+                    .form__group
+                        button.btn.btn--green.revsub(type='submit') Submit
+
             .reviews
                 each review in tour.reviews
                     +reviewCard(review)
-            if user 
-                section.section-reviews-user
-                    form.add-review
-                        h2.heading-secondary.ma-bt-lg=`Add Review `
-                        input(type="text" class="review-input css-input" placeholder="Fantastic Refreshing" data-id=`${tour.id}`)
-                        .rating
-                            label
-                                input(type='radio' name='stars' value='1')
-                                span.icon &starf;
-                            label
-                                input(type='radio' name='stars' value='2')
-                                span.icon &starf;
-                                span.icon &starf;
-                            label
-                                input(type='radio' name='stars' value='3')
-                                span.icon &starf;
-                                span.icon &starf;
-                                span.icon &starf;
-                            label
-                                input(type='radio' name='stars' value='4')
-                                span.icon &starf;
-                                span.icon &starf;
-                                span.icon &starf;
-                                span.icon &starf;
-                            label
-                                input(type='radio' name='stars' value='5')
-                                span.icon &starf;
-                                span.icon &starf;
-                                span.icon &starf;
-                                span.icon &starf;
-                                span.icon &starf;
-                        .form__group
-                            button.btn.btn--green.revsub Submit    
-
-    section.section-cta
         

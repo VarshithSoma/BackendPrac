@@ -32,6 +32,8 @@ html {
   font-size: 62.5%;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -39,7 +41,7 @@ body {
   font-weight: 300;
   font-family: 'Lato', sans-serif;
   color: #777;
-  padding: 3rem;
+  padding: 1rem;
   min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -841,7 +843,6 @@ body {
 @media only screen and (max-width: 37.5em) {
   .nav__el:not(:last-child) {
     margin-right: 0;
-    margin-bottom: 1.2rem;
   }
 }
 .nav__el:focus {
@@ -1334,7 +1335,7 @@ body {
   width: 500px;
   display: flex;
   flex-direction: column;
-  background-color: #cccccc;
+  background-color: #f7f7f7;
   border-radius: 10px;
   padding: 30px;
 }
@@ -1438,5 +1439,160 @@ body {
   width: 300px;
 }
 .revsub {
+  margin-top: 20px;
+}
+@media (max-width: 831px) {
+  .card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    margin: 0;
+  }
+  .card__details {
+    width: 100%;
+  }
+  .card__footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+  }
+  .main {
+    padding: 3rem;
+  }
+}
+@media (max-width: 1000px) {
+  .header {
+    border-radius: 10px;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+@media (min-width: 400px) and (max-width: 610px) {
+  .vardivone {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.nav--tours {
+  margin: 0;
+}
+.review-input {
+  width: 100%;
+}
+@media (max-width: 910px) {
+  .cta {
+    display: none;
+  }
+  * {
+    display: block;
+  }
+}
+html {
+  overflow-x: hidden;
+}
+/* Add these media queries at the end of your CSS file */
+
+@media screen and (max-width: 768px) {
+  /* Tablet styles */
+
+  /* Adjust the main container's padding */
+  .main {
+    padding: 4rem 2rem;
+  }
+
+  /* Adjust the header's logo and navigation */
+  .header__logo img {
+    height: 2.5rem;
+  }
+
+  .nav__search-input {
+    width: 15rem;
+  }
+
+  /* Adjust the section-header's height */
+  .section-header {
+    height: 30vw;
+  }
+
+  /* Adjust the card container's grid */
+  .card-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Adjust the overview box's grid */
+  .overview-box__group {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Adjust the picture box's height */
+  .picture-box__img {
+    height: 25rem;
+  }
+
+  /* Adjust the section-map's height */
+  .section-map {
+    height: 50rem;
+  }
+
+  /* Adjust the reviews' grid */
+  .reviews {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Adjust the cta's padding */
+  .cta {
+    padding: 6rem 3rem 6rem 15rem;
+  }
+
+  /* Adjust the user-view's content */
+  .user-view__content {
+    padding: 5rem 0;
+  }
+
+  /* Adjust the footer's grid */
+  .footer {
+    grid-template-columns: 1fr;
+    grid-row-gap: 1.5rem;
+  }
+
+  .footer__logo {
+    grid-row: 1;
+  }
+
+  .footer__nav {
+    grid-row: 2;
+  }
+
+  .footer__copyright {
+    grid-row: 3;
+    justify-self: center;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  .var {
+    display: flex;
+    flex-direction: column;
+  }
+  .heading-box__group {
+    display: none;
+  }
+  #map {
+    transform: scale(0.8);
+  }
+}
+.revad {
+  display: flex;
+  flex-direction: column;
+}
+.section-reviews-user {
+  width: 80%;
+}
+.rating-num {
   margin-top: 20px;
 }

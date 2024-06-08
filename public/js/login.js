@@ -126,16 +126,18 @@ const updateSettings = async (data, type) => {
     showAlert('error', error.response.data.message);
   }
 };
-const submitReview = document.getElementsByClassName('submit-review');
+const submitReview = document.querySelector('.add-review');
 if (submitReview) {
-  submitReview.addEventListener('submit', function() {
+  submitReview.addEventListener('submit', function(event) {
+    event.preventDefault();
     const reviewText = document.getElementById('reviewText').value;
-    const rating = document.querySelector('input[name="stars"]:checked').value;
+    const rating = document.querySelector('input[name="rating"]').value;
     const reviewData = {
       review: reviewText,
       rating: parseInt(rating)
     };
-    const id = document.getElementsByClassName('review-input').dataset.id;
+    console.log();
+    const id = document.querySelector('.review-input').dataset.id;
     const url = `/api/v1/tours/${id}/review`;
     console.log(url, reviewData);
     axios
