@@ -3,7 +3,7 @@ const login = async (email, password) => {
   try {
     const res = await axios({
       method: 'POST',
-      url: 'http://localhost:8000/api/v1/users/login',
+      url: '/api/v1/users/login',
       data: {
         email,
         password
@@ -24,7 +24,7 @@ const logout = async () => {
   try {
     const res = await axios({
       method: 'GET',
-      url: 'http://localhost:8000/api/v1/users/logout'
+      url: '/api/v1/users/logout'
     });
     if (res.data.status === 'success') {
       location.reload(true);
@@ -144,6 +144,10 @@ if (submitReview) {
       .post(url, reviewData)
       .then(response => {
         console.log('Success:', response.data);
+        // Clear input fields after successful submission
+        document.getElementById('reviewText').value = '';
+        document.querySelector('input[name="rating"]').value = '';
+        showAlert('success', 'added the review');
       })
       .catch(error => {
         console.error('Error:', error);

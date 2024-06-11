@@ -3,6 +3,10 @@ const reviewController = require('../controllers/reviewController');
 const authController = require('../controllers/authController');
 const Router = express.Router({ mergeParams: true });
 Router.use(authController.protect);
+Router.use((req, res, next) => {
+  console.log('in review');
+  next();
+});
 Router.route('/')
   .get(authController.protect, reviewController.getAllReviews)
   .post(
