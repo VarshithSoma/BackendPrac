@@ -148,6 +148,7 @@ if (submitReview) {
         document.getElementById('reviewText').value = '';
         document.querySelector('input[name="rating"]').value = '';
         showAlert('success', 'added the review');
+        location.reload();
       })
       .catch(error => {
         console.error('Error:', error);

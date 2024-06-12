@@ -60,13 +60,13 @@ block content
     section.section-reviews
         .revad
             if user
-            section.section-reviews-user
-                form.add-review
-                    h2.heading-secondary.ma-bt-lg Add Review
-                    input#reviewText(type="text" class="review-input css-input" placeholder="Fantastic Refreshing" data-id=tour.id data-user-id=user._id)
-                    input(type='number' class="css-input rating-num" name='rating' placeholder="Give rating")
-                    .form__group
-                        button.btn.btn--green.revsub(type='submit') Submit
+                section.section-reviews-user
+                    form.add-review
+                        h2.heading-secondary.ma-bt-lg Add Review
+                        input#reviewText(type="text" class="review-input css-input" placeholder="Give Review" data-id=tour.id data-user-id=user._id)
+                        input(type='number' class="css-input rating-num" name='rating' placeholder="Give Rating <=5")
+                        .form__group
+                            button.btn.btn--green.revsub(type='submit') Submit
 
             .reviews
                 each review in tour.reviews
