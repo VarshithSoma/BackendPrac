@@ -226,7 +226,7 @@ body {
   color: #fff;
 }
 .btn--green::after {
-  background-color: #55c57a;
+  background-color: #a1a1a1;
 }
 
 .btn--small {
@@ -268,7 +268,7 @@ body {
 }
 
 .btn-text:hover {
-  background-color: #55c57a;
+  background-color: #5a5a5a;
   color: #fff;
   -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
@@ -285,7 +285,7 @@ body {
 
 .btn-text:focus {
   outline: none;
-  outline: 3px solid #55c57a;
+  outline: 3px solid #616161;
   outline-offset: 3px;
 }
 
@@ -602,7 +602,7 @@ body {
   margin-right: 1px;
 }
 .reviews__star--active {
-  fill: #55c57a;
+  fill: #3c3c3c;
 }
 .reviews__star--inactive {
   fill: #bbb;
@@ -694,8 +694,8 @@ body {
     linear,
     left top,
     right bottom,
-    from(#7dd56f),
-    to(#28b487)
+    from(#616161),
+    to(#676767)
   );
   padding: 4rem 0;
 }
@@ -1064,7 +1064,7 @@ body {
 .card__icon {
   height: 2rem;
   width: 2rem;
-  fill: #55c57a;
+  fill: #474747;
 }
 .card__footer {
   background-color: #f7f7f7;
@@ -1156,10 +1156,10 @@ body {
 }
 .form__input:focus {
   outline: none;
-  border-bottom: 3px solid #55c57a;
+  border-bottom: 3px solid #5d5d5d;
 }
 .form__input:focus:invalid {
-  border-bottom: 3px solid #ff7730;
+  border-bottom: 3px solid #50504f;
 }
 .form__input::-webkit-input-placeholder {
   color: #bbb;
@@ -1203,22 +1203,22 @@ body {
 }
 
 .form__upload:focus + label {
-  outline: 3px solid #55c57a;
+  outline: 3px solid #808080;
   outline-offset: 3px;
 }
 
 .form__upload + label {
-  color: #55c57a;
+  color: #5a5a5a;
   display: inline-block;
   text-decoration: none;
-  border-bottom: 1px solid #55c57a;
+  border-bottom: 1px solid #6f6f6f;
   padding: 3px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
   cursor: pointer;
 }
 .form__upload + label:hover {
-  background-color: #55c57a;
+  background-color: #424242;
   color: #fff;
   -webkit-box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
@@ -1413,7 +1413,7 @@ body {
 
 .rating:not(:hover) label input:checked ~ .icon,
 .rating:hover label:hover input ~ .icon {
-  color: #55c57a;
+  color: #444444;
 }
 
 .rating label input:focus:not(:checked) ~ .icon:last-child {
@@ -1603,4 +1603,7 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-around;
+}
+.loginbtn {
+  margin-right: 30px;
 }
