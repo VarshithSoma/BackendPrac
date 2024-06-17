@@ -1501,6 +1501,9 @@ html {
   /* Tablet styles */
 
   /* Adjust the main container's padding */
+  .heading-primary {
+    font-size: medium;
+  }
   .main {
     padding: 4rem 2rem;
   }
