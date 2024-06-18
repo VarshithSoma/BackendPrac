@@ -851,7 +851,6 @@ body {
 .nav__el--cta {
   padding: 1rem 3rem;
   border-radius: 10rem;
-  border: 1px solid currentColor !important;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
@@ -859,7 +858,6 @@ body {
   background-color: #f7f7f7;
   color: #777;
   text-shadow: none;
-  border-color: #f7f7f7;
 }
 .nav__search {
   display: -webkit-box;
@@ -1502,7 +1500,8 @@ html {
 
   /* Adjust the main container's padding */
   .heading-primary {
-    font-size: medium;
+    font-size: medium !important;
+    color: white;
   }
   .main {
     padding: 4rem 2rem;
@@ -1609,4 +1608,7 @@ html {
 }
 .loginbtn {
   margin-right: 30px;
+}
+.nav__el--cta {
+  border: none;
 }
