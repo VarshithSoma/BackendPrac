@@ -855,7 +855,6 @@ body {
   transition: all 0.3s;
 }
 .nav__el--cta:hover {
-  background-color: #f7f7f7;
   color: #777;
   text-shadow: none;
 }
